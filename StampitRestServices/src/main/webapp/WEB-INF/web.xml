@@ -30,6 +30,7 @@
     <servlet-name>exporter</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+  <!-- 
   <filter> 
     <filter-name>corsFilter</filter-name>
     <filter-class>com.stampit.filters.CorsFilter</filter-class> 
@@ -38,4 +39,5 @@
     <filter-name>corsFilter</filter-name>
     <url-pattern>/rest/*</url-pattern> 
   </filter-mapping>
+   -->
 </web-app>
