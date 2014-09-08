@@ -60,7 +60,7 @@ public class CodeValidationController {
 		Customer codeCustomer = customerRepository.findOne(idCustomer);
 		ActiveCard codeActiveCard = activeCardRepository.findByCardAndCustomerAndStampsNumberNot(codeCard, codeCustomer, codeCard.getSlotsNum());
 		int stampsToAdd = codeObject.getStampParameters().getStampsNum();
-		if(codeActiveCard == null) {
+		if(codeActiveCard == null || codeActiveCard.getStampsNumber() == codeCard.getSlotsNum()) {
 			codeActiveCard = new ActiveCard();
 			codeActiveCard.setCard(codeCard);			
 			codeActiveCard.setCustomer(codeCustomer);					

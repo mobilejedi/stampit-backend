@@ -47,4 +47,20 @@
 		<jpa:repositories base-package="com.stampit.repositories"
 			entity-manager-factory-ref="entityManagerFactory"
 			transaction-manager-ref="transactionManager" />
+		<bean id="mailProperties"
+	      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		  <property name="locations">
+		    <list>
+		      <value>classpath*:mail_config.properties</value>
+		    </list>
+		  </property>
+		</bean>
+		<bean id="properties"
+	      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		  <property name="locations">
+		    <list>
+		      <value>classpath*:config.properties</value>
+		    </list>
+		  </property>
+		</bean>
 	</beans>
