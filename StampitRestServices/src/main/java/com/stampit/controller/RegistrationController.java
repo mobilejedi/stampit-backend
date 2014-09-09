@@ -66,7 +66,7 @@ public class RegistrationController {
 		}
 		logger.info(customerObject.toString());
 		RestTemplate restTemplate = new RestTemplate();
-		String customersUrl = "http://localhost:8080/StampitRestServices-0.0.1-SNAPSHOT/rest/customers";
+		String customersUrl = "http://localhost:8080/StampitRestServices/rest/customers";
 		String content = null;
 		try {
 			content = restTemplate.postForObject(customersUrl, customerObject, String.class);		

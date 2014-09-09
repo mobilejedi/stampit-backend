@@ -89,7 +89,7 @@ public class CodeValidationController {
 						
 		}
 		RestTemplate restTemplate = new RestTemplate();
-		String codeActiveCardUrl = "http://localhost:8080/StampitRestServices-0.0.1-SNAPSHOT/rest/activeCards/{idCard}";
+		String codeActiveCardUrl = "http://localhost:8080/StampitRestServices/rest/activeCards/{idCard}";
 		String content= restTemplate.getForObject(codeActiveCardUrl, String.class, codeActiveCard.getIdActiveCard());		
 		response =  new ResponseEntity<String>(content, new HttpHeaders(), HttpStatus.OK);
 		this.updateAchievedBonuses(codeActiveCard);
