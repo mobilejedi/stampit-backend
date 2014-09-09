@@ -3,6 +3,8 @@ package com.stampit.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,7 @@ public class CodeValidationController {
 	@Autowired private MerchantRepository merchantRepository;
 	
 	@RequestMapping("/validateCode")
-	public ResponseEntity<String> validateCodeAssignBonus(@RequestParam(value="idCustomer", required=true)Long idCustomer,  @RequestParam(value="code", required=true)String code) {		
+	public ResponseEntity<String> validateCodeAssignBonus(@RequestParam(value="idCustomer", required=true)Long idCustomer,  @RequestParam(value="code", required=true)String code, HttpServletRequest request) {		
 		Code codeObject = codeRepository.findByCode(code);
 		if(codeObject == null) {
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
@@ -89,7 +91,8 @@ public class CodeValidationController {
 						
 		}
 		RestTemplate restTemplate = new RestTemplate();
-		String codeActiveCardUrl = "http://localhost:8080/StampitRestServices/rest/activeCards/{idCard}";
+		String baseUrl = String.format("%s://%s:%d/",request.getScheme(),  request.getServerName(), request.getServerPort());
+		String codeActiveCardUrl = baseUrl + "/StampitRestServices/rest/activeCards/{idCard}";
 		String content= restTemplate.getForObject(codeActiveCardUrl, String.class, codeActiveCard.getIdActiveCard());		
 		response =  new ResponseEntity<String>(content, new HttpHeaders(), HttpStatus.OK);
 		this.updateAchievedBonuses(codeActiveCard);

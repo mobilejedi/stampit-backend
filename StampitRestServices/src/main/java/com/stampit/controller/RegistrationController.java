@@ -53,6 +53,7 @@ public class RegistrationController {
 	@RequestMapping(value = "/registerCustomer", method = RequestMethod.POST,  consumes = "application/json")
 	public ResponseEntity<String> registerUser(@RequestBody String customer, HttpServletRequest request) {
 		logger.info("customer" + customer);
+		String baseUrl = String.format("%s://%s:%d/",request.getScheme(),  request.getServerName(), request.getServerPort());
 		ObjectMapper objectMapper = new ObjectMapper();
 		Customer customerObject = null;		
 		try {
@@ -66,7 +67,7 @@ public class RegistrationController {
 		}
 		logger.info(customerObject.toString());
 		RestTemplate restTemplate = new RestTemplate();
-		String customersUrl = "http://localhost:8080/StampitRestServices/rest/customers";
+		String customersUrl = baseUrl + "StampitRestServices/rest/customers";
 		String content = null;
 		try {
 			content = restTemplate.postForObject(customersUrl, customerObject, String.class);		
