@@ -110,12 +110,16 @@ public class RegistrationController {
 //        props.put("mail.transport.protocol", "smtp");
         final String username = properties.getProperty("mail.username");
         final String password = properties.getProperty("mail.password");
+        logger.info("username:" + username);
+        logger.info("password" + password);
+        logger.info("mailProperties" + mailProperties.getProperty("socksProxyHost"));
         Session session = Session.getDefaultInstance(mailProperties, 
                              new Authenticator(){
                                 protected PasswordAuthentication getPasswordAuthentication() {
                                    return new PasswordAuthentication(username, password);
                                 }
                              });
+        logger.info("Session: " + session);
         Message msg = new MimeMessage(session);    
         msg.setFrom(new InternetAddress(username));		
 	    msg.setRecipients(Message.RecipientType.TO, 
