@@ -15,7 +15,7 @@
 			http://www.springframework.org/schema/tx
 			http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 		<jee:jndi-lookup id="stampitDS"
-			jndi-name="mysql/stampit" resource-ref="true" />
+			jndi-name="jdbc/stampit" resource-ref="true" />
 		<bean id="entityManagerFactory"
 			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 			p:dataSource-ref="stampitDS">
