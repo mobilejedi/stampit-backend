@@ -112,7 +112,7 @@ public class RegistrationController {
 	
 	private void sendConfirmationEmail(String email, CustomerConfirmation customerConfirmation, HttpServletRequest request) throws AddressException, MessagingException {
 		String appUrl = String.format("%s://%s:%d/%s",request.getScheme(),  request.getServerName(), request.getServerPort(), request.getContextPath());
-		String confirmationUrl = appUrl + "validateConfirmationKey/" + customerConfirmation.getIdCustomer() + "&" + customerConfirmation.getConfirmationKey();
+		String confirmationUrl = appUrl + "/validateConfirmationKey/" + customerConfirmation.getIdCustomer() + "&" + customerConfirmation.getConfirmationKey();
 		logger.info("confirmationUrl: " + confirmationUrl);
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         Properties props = new Properties();
@@ -153,7 +153,7 @@ public class RegistrationController {
         msg.setFrom(new InternetAddress(username));		
 	    msg.setRecipients(Message.RecipientType.TO, 
 	                         InternetAddress.parse(email, false));
-	    msg.setSubject("Welcome in StampIt");
+	    msg.setSubject("Welcome to StampIt");
 	    msg.setText("Please confirm your e-mail clicking on the following url " +
 	        		confirmationUrl);
 	    msg.setSentDate(new Date());
