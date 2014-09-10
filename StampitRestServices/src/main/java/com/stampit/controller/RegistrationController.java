@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,15 +45,35 @@ public class RegistrationController {
 	private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 	@Autowired private CustomerConfirmationRepository customerConfirmationRepository;
 	@Autowired private CustomerRepository customerRepository;
-	@Resource(name="mailProperties")	
-	private Properties mailProperties;
-	@Resource(name="properties")	
-	private Properties properties;
+	
+	@Value("#{mailProperties['mail.smtp.host']}")
+	private String mailSmtpHost;
+	@Value("#{mailProperties['mail.smtp.socketFactory.class']}")
+	private String mailSmtpSocketFactoryClass;
+	@Value("#{mailProperties['mail.smtp.socketFactory.fallback']}")
+	private String mailSmtpSocketFactoryFallback;
+	@Value("#{mailProperties['mail.smtp.port']}")
+	private String mailSmtpPort;
+	@Value("#{mailProperties['mail.smtp.socketFactory.port']}")
+	private String mailSmtpSocketFactoryPort;
+	@Value("#{mailProperties['mail.smtp.auth']}")
+	private String mailSmtpAuth;
+	@Value("#{mailProperties['mail.debug']}")
+	private String mailDebug;
+	@Value("#{mailProperties['mail.store.protocol']}")
+	private String mailStoreProtocol;
+	@Value("#{mailProperties['mail.transport.protocol']}")
+	private String mailTransportProtocol;
+	@Value("#{mailProperties['mail.username']}")
+	private String username;
+	@Value("#{mailProperties['mail.password']}")
+	private String password;
 	
 	@RequestMapping(value = "/registerCustomer", method = RequestMethod.POST,  consumes = "application/json")
 	public ResponseEntity<String> registerUser(@RequestBody String customer, HttpServletRequest request) {
 		logger.info("customer" + customer);
-		String baseUrl = String.format("%s://%s:%d/",request.getScheme(),  request.getServerName(), request.getServerPort());
+		logger.info("Context path: " + request.getContextPath());
+		String appUrl = String.format("%s://%s:%d/%s",request.getScheme(),  request.getServerName(), request.getServerPort(), request.getContextPath());
 		ObjectMapper objectMapper = new ObjectMapper();
 		Customer customerObject = null;		
 		try {
@@ -67,7 +87,7 @@ public class RegistrationController {
 		}
 		logger.info(customerObject.toString());
 		RestTemplate restTemplate = new RestTemplate();
-		String customersUrl = baseUrl + "StampitRestServices/rest/customers";
+		String customersUrl = appUrl + "/rest/customers";
 		String content = null;
 		try {
 			content = restTemplate.postForObject(customersUrl, customerObject, String.class);		
@@ -95,25 +115,34 @@ public class RegistrationController {
 		String confirmationUrl = baseUrl + "validateConfirmationKey/" + customerConfirmation.getIdCustomer() + "&" + customerConfirmation.getConfirmationKey();
 		logger.info("confirmationUrl: " + confirmationUrl);
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-        //final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";        
-//      props.setProperty("proxySet","true");
-//      props.setProperty("socksProxyHost","10.182.146.152");
-//      props.setProperty("socksProxyPort","80");
-//        props.setProperty("mail.smtp.host", "smtp.gmail.com");
-//        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
-//        props.setProperty("mail.smtp.socketFactory.fallback", "false");
-//        props.setProperty("mail.smtp.port", "465");
-//        props.setProperty("mail.smtp.socketFactory.port", "465");
-//        props.put("mail.smtp.auth", "true");
-//        props.put("mail.debug", "true");
-//        props.put("mail.store.protocol", "imap");
-//        props.put("mail.transport.protocol", "smtp");
-        final String username = properties.getProperty("mail.username");
-        final String password = properties.getProperty("mail.password");
-        logger.info("username:" + username);
-        logger.info("password" + password);
-        logger.info("mailProperties" + mailProperties.getProperty("socksProxyHost"));
-        Session session = Session.getDefaultInstance(mailProperties, 
+        Properties props = new Properties();
+        logger.info("mail.smtp.host: " + mailSmtpHost);
+//		props.setProperty("mail.smtp.host", mailSmtpHost);
+//        props.setProperty("mail.smtp.socketFactory.class", mailSmtpSocketFactoryClass);
+//        props.setProperty("mail.smtp.socketFactory.fallback", mailSmtpSocketFactoryFallback);
+//        props.setProperty("mail.smtp.port", mailSmtpPort);
+//        props.setProperty("mail.smtp.socketFactory.port", mailSmtpSocketFactoryPort);
+//        props.put("mail.smtp.auth", mailSmtpAuth);
+//        props.put("mail.debug", mailDebug);
+//        props.put("mail.store.protocol", mailStoreProtocol);
+//        props.put("mail.transport.protocol", mailTransportProtocol);
+        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+        props.setProperty("mail.smtp.host", "smtp.gmail.com");
+        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+        props.setProperty("mail.smtp.socketFactory.fallback", "false");
+        props.setProperty("mail.smtp.port", "465");
+        props.setProperty("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.debug", "true");
+        props.put("mail.store.protocol", "imap");
+        props.put("mail.transport.protocol", "smtp");
+        final String username = "stampit.test@gmail.com";
+        final String password = "alten003";
+        
+        logger.info("username: " + username);
+        logger.info("password: " + password);
+        
+        Session session = Session.getDefaultInstance(props, 
                              new Authenticator(){
                                 protected PasswordAuthentication getPasswordAuthentication() {
                                    return new PasswordAuthentication(username, password);

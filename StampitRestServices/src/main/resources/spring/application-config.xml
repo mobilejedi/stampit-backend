@@ -51,16 +51,8 @@
 	      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		  <property name="locations">
 		    <list>
-		      <value>classpath*:mail_config.properties</value>
+		      <value>classpath*:mail_config.properties</value>		      
 		    </list>
 		  </property>
-		</bean>
-		<bean id="properties"
-	      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		  <property name="locations">
-		    <list>
-		      <value>classpath*:config.properties</value>
-		    </list>
-		  </property>
-		</bean>
+		</bean>		
 	</beans>
