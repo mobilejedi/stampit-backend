@@ -39,6 +39,6 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>corsFilter</filter-name>
-		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 </web-app>
