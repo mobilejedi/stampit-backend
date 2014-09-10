@@ -111,8 +111,8 @@ public class RegistrationController {
 	}
 	
 	private void sendConfirmationEmail(String email, CustomerConfirmation customerConfirmation, HttpServletRequest request) throws AddressException, MessagingException {
-		String baseUrl = String.format("%s://%s:%d/",request.getScheme(),  request.getServerName(), request.getServerPort());
-		String confirmationUrl = baseUrl + "validateConfirmationKey/" + customerConfirmation.getIdCustomer() + "&" + customerConfirmation.getConfirmationKey();
+		String appUrl = String.format("%s://%s:%d/%s",request.getScheme(),  request.getServerName(), request.getServerPort(), request.getContextPath());
+		String confirmationUrl = appUrl + "validateConfirmationKey/" + customerConfirmation.getIdCustomer() + "&" + customerConfirmation.getConfirmationKey();
 		logger.info("confirmationUrl: " + confirmationUrl);
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         Properties props = new Properties();
