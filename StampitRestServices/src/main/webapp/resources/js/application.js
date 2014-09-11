@@ -7,7 +7,7 @@ $('#registrationForm').on('submit', function(event) {
 	$.ajax({
 		url:'http://54.191.5.48:8085/StampitRestServices/registerCustomer', 
 		contentType: "application/json",
-        dataType: "json",
+        dataType: "text",
 		type: 'POST',
 		data: JSON.stringify({
 			username: $("#username").val(),
