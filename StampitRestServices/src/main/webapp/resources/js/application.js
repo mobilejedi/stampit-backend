@@ -5,7 +5,7 @@ $(document).ready(function() {
 		console.log('Dati iviati: ' + $('#registrationForm').serialize());
 		var form = $(this);
 		$.ajax({
-			url:'http://54.191.5.48:8085/StampitRestServices/registerCustomer', 
+			url:'http://localhost/StampitRestServices/registerCustomer', 
 			contentType: "application/json",
 	        dataType: "text",
 			type: 'POST',
@@ -19,8 +19,7 @@ $(document).ready(function() {
 			}),
 			success: function(result) {
 				$('#errorMessage').addClass('hide');
-				$('#successMessage').removeClass('hide');
-				form.remove();
+				$('#successMessage').removeClass('hide');				
 			},
 			error: function(request, errorType, errorMessage) {			
 				console.log('errorType: ' + errorType);
