@@ -20,7 +20,7 @@ $(document).ready(function() {
 			success: function(result) {
 				$('#errorMessage').addClass('hide');
 				$('#successMessage').removeClass('hide');
-				form.reset();
+				form.remove();
 			},
 			error: function(request, errorType, errorMessage) {			
 				console.log('errorType: ' + errorType);
