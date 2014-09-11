@@ -18,7 +18,7 @@ $(document).ready(function() {
 				phone: $("#phone").val()
 			}),
 			success: function(result) {
-				$('#usernameErrorMessage').addClass('hide');
+				$('#errorMessage').addClass('hide');
 				$('#successMessage').removeClass('hide');
 				form.reset();
 			},
