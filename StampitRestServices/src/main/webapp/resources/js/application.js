@@ -35,6 +35,10 @@ $(document).ready(function() {
 					$('#successMessage').addClass('hide');	
 					$('#errorMessage').removeClass('hide').text('There has been a problem processing your request.');
 				},
+				404: function() {
+					$('#successMessage').addClass('hide');	
+					$('#errorMessage').removeClass('hide').text('The service is currently unavailable.');
+				},
 				201: function() {
 					$('#successMessage').removeClass('hide');
 					$('#errorMessage').addClass('hide');
