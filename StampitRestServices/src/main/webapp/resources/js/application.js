@@ -1,27 +1,37 @@
-$('#registrationForm').on('submit', function(event) {
-	alert('Function has been called');
-	event.preventDefault();
-	$.support.cors = true;
-	console.log('Dati iviati: ' + $('#registrationForm').serialize());
-	var form = $(this);
-	$.ajax({
-		url:'http://54.191.5.48:8085/StampitRestServices/registerCustomer', 
-		contentType: "application/json",
-        dataType: "text",
-		type: 'POST',
-		data: JSON.stringify({
-			username: $("#username").val(),
-			password: $("#password").val(),
-			firstName: $("#firstName").val(),
-			lastName: $("#lastName").val(),
-			email: $("#email").val(),
-			phone: $("#phone").val()
-		}),
-		success: function(result) {
-			alert('Your registration has been successful.');
-		},
-		error: function(request, errorType, errorMessage) {
-			alert('Your registration has not been successful.');
-		}		
+$(document).ready(function() {
+	$('#registrationForm').on('submit', function(event) {
+		event.preventDefault();
+		$.support.cors = true;
+		console.log('Dati iviati: ' + $('#registrationForm').serialize());
+		var form = $(this);
+		$.ajax({
+			url:'http://localhost:8080/StampitRestServices-0.0.1-SNAPSHOT/registerCustomer', 
+			contentType: "application/json",
+	        dataType: "text",
+			type: 'POST',
+			data: JSON.stringify({
+				username: $("#username").val(),
+				password: $("#password").val(),
+				firstName: $("#firstName").val(),
+				lastName: $("#lastName").val(),
+				email: $("#email").val(),
+				phone: $("#phone").val()
+			}),
+			success: function(result) {
+				$('#usernameErrorMessage').addClass('hide');
+				$('#successMessage').removeClass('hide');
+				form.reset();
+			},
+			error: function(request, errorType, errorMessage) {			
+				console.log('errorType: ' + errorType);
+				console.log('errorMessage: ' + errorMessage);
+				if(errorMessage === 'Unprocessable Entity') {
+					$('#errorMessage').removeClass('hide').text('The username you inserted already exist: please select another one');
+				} else {
+					$('#errorMessage').removeClass('hide').text('The service is currently unavailable: please try again later.');
+				}
+				$('#successMessage').addClass('hide');						
+			}		
+		});
 	});
 });

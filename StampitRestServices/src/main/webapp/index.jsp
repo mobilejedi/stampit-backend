@@ -14,7 +14,7 @@
 
     <!-- Bootstrap -->
     <link href=<c:url value="resources/css/bootstrap.min.css" /> rel="stylesheet">    
-
+	<link href=<c:url value="resources/css/my.css" /> rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -65,29 +65,32 @@
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
 				<form id="registrationForm" role="form" action="#" >
+				  <div id="successMessage" class="alert alert-success hide" role="alert">Please check your e-mail to complete the registration process.</div>
+				  <div id="errorMessage" class="alert alert-danger hide" role="alert"></div>
+				  
 				  <div class="form-group">
 					<label for="username">Username</label>
-					<input type="text" class="form-control" id="username" name="username" placeholder="Username">
+					<input required pattern=".{0,16}" title="16 characters maximum" type="text" class="form-control" id="username" name="username" placeholder="Enter username">
 				  </div>
 				  <div class="form-group">
 					<label for="password">Password</label>
-					<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+					<input required pattern=".{6,50}" title="6 characters minimum, 50 characters maximum" type="password" class="form-control" id="password" name="password" placeholder="Enter password">
 				  </div>
 				  <div class="form-group">		
 					<label for="firstName">First Name</label>
-					<input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter your first name">
+					<input required pattern=".{0,45}" title="45 characters maximum" type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter your first name">
 				  </div>
 				  <div class="form-group">		
 					<label for="lastName">Last Name</label>
-					<input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter your last name">
+					<input required pattern=".{0,45}" title="45 characters maximum" type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter your last name">
 				  </div>
 				  <div class="form-group">		
 					<label for="email">Email address</label>
-					<input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+					<input required required pattern=".{0,45}" title="45 characters maximum" type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
 				  </div>
 				  <div class="form-group">		
 					<label for="phone">Phone</label>
-					<input type="tel" class="form-control" id="phone"  name="phone" placeholder="Enter phone">
+					<input required required pattern=".{0,45}" title="45 characters maximum" type="tel" class="form-control" id="phone"  name="phone" placeholder="Enter phone">
 				  </div>
 				  <button type="submit" class="btn btn-default">Submit</button>
 				</form>

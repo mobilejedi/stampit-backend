@@ -102,7 +102,7 @@ public class RegistrationController {
 		} catch(Exception ex) {
 			customerRepository.delete(confirmation.getIdCustomer());
 			ex.printStackTrace();
-			response =  new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY);
+			response =  new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.REQUEST_TIMEOUT);
 			return response;
 		}
 		response =  new ResponseEntity<String>(content, new HttpHeaders(), HttpStatus.CREATED);
