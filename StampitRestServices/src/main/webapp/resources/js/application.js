@@ -5,7 +5,7 @@ $(document).ready(function() {
 		console.log('Dati iviati: ' + $('#registrationForm').serialize());
 		var form = $(this);
 		$.ajax({
-			url:'http://localhost:8080/StampitRestServices-0.0.1-SNAPSHOT/registerCustomer', 
+			url:'http://54.191.5.48:8085/StampitRestServices/registerCustomer', 
 			contentType: "application/json",
 	        dataType: "text",
 			type: 'POST',
