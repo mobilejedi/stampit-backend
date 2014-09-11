@@ -16,21 +16,30 @@ $(document).ready(function() {
 				lastName: $("#lastName").val(),
 				email: $("#email").val(),
 				phone: $("#phone").val()
-			}),
-			success: function(result) {
-				$('#errorMessage').addClass('hide');
-				$('#successMessage').removeClass('hide');				
-			},
+			}),			
 			error: function(request, errorType, errorMessage) {			
 				console.log('errorType: ' + errorType);
 				console.log('errorMessage: ' + errorMessage);
-				if(errorMessage === 'Unprocessable Entity') {
-					$('#errorMessage').removeClass('hide').text('The username you inserted already exist: please select another one');
-				} else {
+				if(errorType === 'Abort') {
+					$('#successMessage').addClass('hide');
 					$('#errorMessage').removeClass('hide').text('The service is currently unavailable: please try again later.');
 				}
-				$('#successMessage').addClass('hide');						
-			}		
+									
+			},
+			statusCode: {
+				422: function() {
+					$('#successMessage').addClass('hide');	
+					$('#errorMessage').removeClass('hide').text('The username you inserted already exist: please select another one');
+				},
+				408: function() {
+					$('#successMessage').addClass('hide');	
+					$('#errorMessage').removeClass('hide').text('There has been a problem processing your request.');
+				},
+				201: function() {
+					$('#successMessage').removeClass('hide');
+					$('#errorMessage').addClass('hide');
+				}
+			}
 		});
 	});
 });
