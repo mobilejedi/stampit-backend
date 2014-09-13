@@ -54,6 +54,7 @@ public class CodeValidationController {
 	
 	@RequestMapping("/validateCode")
 	public ResponseEntity<String> validateCodeAssignBonus(@RequestParam(value="idCustomer", required=true)Long idCustomer,  @RequestParam(value="code", required=true)String code, HttpServletRequest request) {		
+		String appUrl = String.format("%s://%s:%d/%s",request.getScheme(),  request.getServerName(), request.getServerPort(), request.getContextPath());		
 		Code codeObject = codeRepository.findByCode(code);
 		if(codeObject == null) {
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
@@ -69,35 +70,33 @@ public class CodeValidationController {
 		}
 		int updatedStampsNumber = codeActiveCard.getStampsNumber() + stampsToAdd;
 		ResponseEntity<String> response = null;
-		if(updatedStampsNumber > codeCard.getSlotsNum()) {
-//			ActiveCard codeNewActiveCard = new ActiveCard();
-//			codeNewActiveCard.setCard(codeCard);			
-//			codeNewActiveCard.setCustomer(codeCustomer);
-//			codeNewActiveCard.setStampsNumber(updatedStampsNumber - codeCard.getSlotsNum());
+		String codeActiveCardUrl = appUrl + "/rest/activeCards/{idCard}";
+		if(updatedStampsNumber >= codeCard.getSlotsNum()) {
+			ActiveCard codeNewActiveCard = new ActiveCard();
+			codeNewActiveCard.setCard(codeCard);			
+			codeNewActiveCard.setCustomer(codeCustomer);
+			codeNewActiveCard.setStampsNumber(updatedStampsNumber - codeCard.getSlotsNum());
 			codeActiveCard.setStampsNumber(codeCard.getSlotsNum());
 			activeCardRepository.save(codeActiveCard);
-//			activeCardRepository.save(codeNewActiveCard);
-//			RestTemplate restTemplate = new RestTemplate();
-//			String codeActiveCardUrl = "http://localhost:8080/StampitRestServices-0.0.1-SNAPSHOT/rest/activeCards/{idCard}";
-//			String content= restTemplate.getForObject(codeActiveCardUrl, String.class, codeNewActiveCard.getIdActiveCard());		
-//			ResponseEntity<String> response =  new ResponseEntity<String>(content, new HttpHeaders(), HttpStatus.OK);
-//			String content= restTemplate.getForObject(codeActiveCardUrl, String.class, codeActiveCard.getIdActiveCard());		
-//			response =  new ResponseEntity<String>(content, new HttpHeaders(), HttpStatus.OK);
-//			this.updateAchievedBonuses(codeActiveCard);
-//			this.updateLogs(codeActiveCard, stampsToAdd);			
+			activeCardRepository.save(codeNewActiveCard);
+			RestTemplate restTemplate = new RestTemplate();			
+			String content= restTemplate.getForObject(codeActiveCardUrl, String.class, codeNewActiveCard.getIdActiveCard());		
+			response =  new ResponseEntity<String>(content, new HttpHeaders(), HttpStatus.OK);
+			this.updateAchievedBonuses(codeActiveCard);
+			this.updateLogs(codeActiveCard, stampsToAdd);	
+			this.updateAchievedBonuses(codeNewActiveCard);
+			this.updateLogs(codeNewActiveCard, stampsToAdd);
+			return response;
 		} else {
 			codeActiveCard.setStampsNumber(updatedStampsNumber);
-			activeCardRepository.save(codeActiveCard);
-						
+			activeCardRepository.save(codeActiveCard);		
+			RestTemplate restTemplate = new RestTemplate();
+			String content= restTemplate.getForObject(codeActiveCardUrl, String.class, codeActiveCard.getIdActiveCard());		
+			response =  new ResponseEntity<String>(content, new HttpHeaders(), HttpStatus.OK);
+			this.updateAchievedBonuses(codeActiveCard);
+			this.updateLogs(codeActiveCard, stampsToAdd);
+			return response;
 		}
-		RestTemplate restTemplate = new RestTemplate();
-		String baseUrl = String.format("%s://%s:%d/",request.getScheme(),  request.getServerName(), request.getServerPort());
-		String codeActiveCardUrl = baseUrl + "/StampitRestServices/rest/activeCards/{idCard}";
-		String content= restTemplate.getForObject(codeActiveCardUrl, String.class, codeActiveCard.getIdActiveCard());		
-		response =  new ResponseEntity<String>(content, new HttpHeaders(), HttpStatus.OK);
-		this.updateAchievedBonuses(codeActiveCard);
-		this.updateLogs(codeActiveCard, stampsToAdd);
-		return response;
 		
 	}
 	
@@ -126,7 +125,7 @@ public class CodeValidationController {
 		}
 	}
 	
-	public void updateLogs(ActiveCard activeCard, int addedStamps) {
+	private void updateLogs(ActiveCard activeCard, int addedStamps) {
 		Log newLog = new Log();
 		newLog.setActiveCard(activeCard);
 		newLog.setStampsNum(addedStamps);
