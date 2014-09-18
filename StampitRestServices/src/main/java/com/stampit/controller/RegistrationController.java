@@ -69,7 +69,7 @@ public class RegistrationController {
 	@Value("#{mailProperties['mail.password']}")
 	private String password;
 	
-	@RequestMapping(value = "/registerCustomer", method = RequestMethod.POST,  consumes = "application/json")
+	@RequestMapping(value = "/registerCustomer", method = RequestMethod.POST,  consumes = "application/json")       
 	public ResponseEntity<String> registerUser(@RequestBody String customer, HttpServletRequest request) {
 		logger.info("customer" + customer);
 		logger.info("Context path: " + request.getContextPath());

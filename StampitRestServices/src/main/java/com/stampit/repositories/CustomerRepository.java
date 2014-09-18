@@ -11,6 +11,7 @@ import com.stampit.model.Customer;
 @RepositoryRestResource(collectionResourceRel ="customer", path="customers")
 public interface CustomerRepository extends PagingAndSortingRepository<Customer, Long> {
 	Customer findByUsername(@Param("username") String username);
+        Customer findByUsernameAndPassword(@Param("username")String username, @Param("password")String password);
 }
 
 
