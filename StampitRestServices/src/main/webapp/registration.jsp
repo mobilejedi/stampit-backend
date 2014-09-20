@@ -50,7 +50,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.jsp">Home</a></li>
                         <li><a href="login.jsp">Login</a></li>
-                        <li><a href="registration.jsp">Register</a></li>
+                        <li><a href="index.jsp">Register</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -58,10 +58,46 @@
         <!-- Main content -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="jumbotron">
-                        <h1>StampIt???????????</h1>                        
-                    </div>
+                <div class="col-md-4 col-md-offset-4">
+                    <h2>Insert your data</h2> 
+                </div>
+            </div>            
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <form id="registrationForm" role="form" action="#" >
+                        <div class="hide progress">
+                            <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            </div>
+                        </div>
+                        <div id="successMessage" class="alert alert-success hide" role="alert">Please check your e-mail to complete the registration process.</div>
+                        <div id="errorMessage" class="alert alert-danger hide" role="alert"></div>
+
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input required pattern=".{0,16}" title="16 characters maximum" type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input required pattern=".{6,50}" title="6 characters minimum, 50 characters maximum" type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                        </div>
+                        <div class="form-group">		
+                            <label for="firstName">First Name</label>
+                            <input required pattern=".{0,45}" title="45 characters maximum" type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter your first name">
+                        </div>
+                        <div class="form-group">		
+                            <label for="lastName">Last Name</label>
+                            <input required pattern=".{0,45}" title="45 characters maximum" type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter your last name">
+                        </div>
+                        <div class="form-group">		
+                            <label for="email">Email address</label>
+                            <input required required pattern=".{0,45}" title="45 characters maximum" type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">		
+                            <label for="phone">Phone</label>
+                            <input required required pattern=".{0,45}" title="45 characters maximum" type="tel" class="form-control" id="phone"  name="phone" placeholder="Enter phone">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
                 </div>
             </div>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

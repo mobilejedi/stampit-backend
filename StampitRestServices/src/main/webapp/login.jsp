@@ -10,11 +10,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Stampit test registration form</title>
+        <title>Stampit test login form</title>
 
         <!-- Bootstrap -->
         <link href=<c:url value="resources/css/bootstrap.min.css" /> rel="stylesheet">    
-        <link href=<c:url value="resources/css/my.css" /> rel="stylesheet">        
+        <link href=<c:url value="resources/css/my.css" /> rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -22,7 +22,8 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body>      
+    <body>
+
         <!-- Navbar -->
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
@@ -54,14 +55,35 @@
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
-        </nav>  	
+        </nav>
+
         <!-- Main content -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="jumbotron">
-                        <h1>StampIt???????????</h1>                        
-                    </div>
+                <div class="col-md-4 col-md-offset-4">
+                    <h2>Insert your credentials</h2> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <form id="loginForm" role="form" action="#" >
+                        <div class="hide progress">
+                            <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            </div>
+                        </div>
+                        <div id="successMessage" class="alert alert-success hide" role="alert">Please check your e-mail to complete the registration process.</div>
+                        <div id="errorMessage" class="alert alert-danger hide" role="alert"></div>
+
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input required pattern=".{0,16}" title="16 characters maximum" type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input required pattern=".{6,50}" title="6 characters minimum, 50 characters maximum" type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                        </div>				  
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
                 </div>
             </div>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
