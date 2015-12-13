@@ -8,19 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.support.Repositories;
-import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 import com.stampit.model.AchievedBonus;
 import com.stampit.model.ActiveCard;
@@ -33,7 +27,6 @@ import com.stampit.model.Merchant;
 import com.stampit.repositories.AchievedBonusRepository;
 import com.stampit.repositories.ActiveCardRepository;
 import com.stampit.repositories.BonusRepository;
-import com.stampit.repositories.CardRepository;
 import com.stampit.repositories.CodeRepository;
 import com.stampit.repositories.CustomerRepository;
 import com.stampit.repositories.LogRepository;
